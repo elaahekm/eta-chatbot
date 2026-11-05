@@ -8,6 +8,8 @@ A local LLM chatbot that answers NYC taxi trip-time questions by calling my ETA 
 - The tool sends a POST request to the API from [nyc-taxi-eta-api](https://github.com/elaahekm/nyc-taxi-eta-api)
 - The exact numbers from the API are printed in the terminal
 
+![Demo](demo.png)
+
 ## Run
 1. Start the ETA API: `uvicorn main:app --port 8000`
 2. Install: `pip install ollama requests`
