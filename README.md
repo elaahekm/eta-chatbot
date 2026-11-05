@@ -23,3 +23,6 @@ Result: 7.58 min, 1.56 km
 
 ## Note
 The 3B model sometimes writes numbers wrong in its own answer, so the program prints the API result directly.
+
+## Structured output
+`structured.py` uses Pydantic to force the model to return a validated trip object (zones, hour, day), which is then sent to the ETA API.
