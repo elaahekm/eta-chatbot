@@ -12,7 +12,7 @@ A local LLM chatbot that answers NYC taxi trip-time questions by calling my ETA 
 
 ## Run
 1. Start the ETA API: `uvicorn main:app --port 8000`
-2. Install: `pip install ollama requests`
+2. Install: `pip install -r requirements.txt`
 3. Run: `python chatbot.py`
 
 ## Example
