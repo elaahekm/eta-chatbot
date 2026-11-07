@@ -26,3 +26,12 @@ The 3B model sometimes writes numbers wrong in its own answer, so the program pr
 
 ## Structured output
 `structured.py` uses Pydantic to force the model to return a validated trip object (zones, hour, day), which is then sent to the ETA API.
+
+## Evaluation
+
+`eval.py` runs 5 test questions and checks that the model extracts
+(pickup_zone, dropoff_zone, hour, day_of_week) correctly.
+
+Run: `python eval.py`
+
+Score: 5/5 (with a system prompt; 2/5 without it)
