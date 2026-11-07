@@ -35,3 +35,12 @@ The 3B model sometimes writes numbers wrong in its own answer, so the program pr
 Run: `python eval.py`
 
 Score: 5/5 (with a system prompt; 2/5 without it)
+
+## Agent
+
+`agent.py` is a LangChain agent (llama3.2:3b via Ollama) with one tool, `predict_eta`.
+The model extracts the zones, hour and weekday name; Python converts the weekday
+to a number and calls the ETA API. The final ETA is printed directly from the
+API result, so the small model cannot change the numbers.
+
+Run: start the ETA server first, then `python agent.py`
