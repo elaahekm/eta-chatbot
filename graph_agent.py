@@ -1,7 +1,8 @@
 import requests
-from typing import TypedDict, Optional
+import ollama
+from typing import TypedDict, Optional, Literal
+from pydantic import BaseModel
 from langgraph.graph import StateGraph, START, END
-
 
 class State(TypedDict):
     question: str
@@ -10,19 +11,40 @@ class State(TypedDict):
     answer: Optional[str]
 
 
+class Trip(BaseModel):
+    pickup_zone: int
+    dropoff_zone: int
+    hour: int
+    day_of_week: Literal["Monday", "Tuesday", "Wednesday", "Thursday",
+                         "Friday", "Saturday", "Sunday"]
+
 
 def extract_node(state: State) -> dict:
     print("مرحله ۱: استخراج پارامترها")
-    return {"params": {"zone": "Midtown", "hour": 18, "weekday": 4}}    
+    response = ollama.chat(
+        model="llama3.2:3b",
+        messages=[{"role": "user", "content": state["question"]}],
+        format=Trip.model_json_schema(),
+    )
+    trip = Trip.model_validate_json(response.message.content)
+    return {"params": trip.model_dump()}
 
 
 
 
 def predict_node(state: State) -> dict:
     print("مرحله ۲: صدا زدن API")
+    p = state["params"]
+    days = {"Monday": 0, "Tuesday": 1, "Wednesday": 2, "Thursday": 3,
+            "Friday": 4, "Saturday": 5, "Sunday": 6}
     r = requests.post(
         "http://localhost:8000/predict_eta",
-        json={"pickup_zone": 161, "dropoff_zone": 236, "hour": 18, "day_of_week": 4},
+        json={
+            "pickup_zone": p["pickup_zone"],
+            "dropoff_zone": p["dropoff_zone"],
+            "hour": p["hour"],
+            "day_of_week": days[p["day_of_week"]],
+        },
     )
     return {"eta": r.json()["estimated_time_minutes"]}
 
@@ -32,9 +54,12 @@ def predict_node(state: State) -> dict:
 def answer_node(state: State) -> dict:
     print("مرحله ۳: ساختن جواب نهایی")
     p = state["params"]
-    text = f"زمان رسیدن از {p['zone']} ساعت {p['hour']} حدود {state['eta']} دقیقه است."
+    text = (
+        f"از زون {p['pickup_zone']} به زون {p['dropoff_zone']} "
+        f"ساعت {p['hour']} روز {p['day_of_week']} "
+        f"حدود {state['eta']} دقیقه طول می‌کشه."
+    )
     return {"answer": text}
-
 
 
 
@@ -54,5 +79,5 @@ graph = builder.compile()
 
 
 if __name__ == "__main__":
-    result = graph.invoke({"question": "ETA from Midtown at 6pm Friday?"})
+    result = graph.invoke({"question": "taxi from zone 132 to zone 161 on Saturday at 8am"})
     print(result["answer"])
