@@ -50,7 +50,7 @@ Run: start the ETA server first, then `python agent.py`
 
 `graph_agent.py` is a multi-step agent built with LangGraph. It has three nodes connected in sequence:
 
-1. **extract**: pulls trip parameters (zone, hour, weekday) from the question
+1. **extract**: uses Ollama (llama3.2:3b) with a pydantic schema to pull pickup zone, dropoff zone, hour and weekday from the question
 2. **predict**: calls the ETA API (`POST /predict_eta`)
 3. **answer**: builds the final answer directly from the API result
 
