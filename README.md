@@ -44,3 +44,18 @@ to a number and calls the ETA API. The final ETA is printed directly from the
 API result, so the small model cannot change the numbers.
 
 Run: start the ETA server first, then `python agent.py`
+
+
+## LangGraph Agent
+
+`graph_agent.py` is a multi-step agent built with LangGraph. It has three nodes connected in sequence:
+
+1. **extract**: pulls trip parameters (zone, hour, weekday) from the question
+2. **predict**: calls the ETA API (`POST /predict_eta`)
+3. **answer**: builds the final answer directly from the API result
+
+Run it (the ETA server must be running on port 8000):
+
+```bash
+python graph_agent.py
+```
