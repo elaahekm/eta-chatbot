@@ -59,3 +59,10 @@ Run it (the ETA server must be running on port 8000):
 ```bash
 python graph_agent.py
 ```
+
+
+
+### Limitations
+
+- The extraction step uses a small 3B model, so it can misread unusual phrasing; the final answer is built directly from the API result, not by the model.
+- Zones must be given as numeric IDs (1-265); place names like "Midtown" are not mapped yet.
