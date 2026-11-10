@@ -66,3 +66,8 @@ python graph_agent.py
 
 - The extraction step uses a small 3B model, so it can misread unusual phrasing; the final answer is built directly from the API result, not by the model.
 - Zones must be given as numeric IDs (1-265); place names like "Midtown" are not mapped yet.
+
+
+## Multi-Tool Agent
+
+The LangGraph agent now has two tools: ETA prediction and a weather tool (currently a stub that returns a fixed answer). A `decide` node checks the question and runs the weather node only when the user asks about the weather.
