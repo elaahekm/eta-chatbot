@@ -1,6 +1,8 @@
-import ollama
 from typing import Literal
+
+import ollama
 from pydantic import BaseModel
+
 
 class Trip(BaseModel):
     pickup_zone: int

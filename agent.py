@@ -1,8 +1,10 @@
 import json
+
 import requests
 from langchain.agents import create_agent
-from langchain_ollama import ChatOllama
 from langchain_core.tools import tool
+from langchain_ollama import ChatOllama
+
 
 @tool
 def predict_eta(pickup_zone: int, dropoff_zone: int, hour: int, day_name: str) -> dict:

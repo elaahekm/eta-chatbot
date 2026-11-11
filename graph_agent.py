@@ -1,17 +1,20 @@
-import requests
+from typing import Literal, TypedDict
+
 import ollama
-from tools import get_weather
-from typing import TypedDict, Optional, Literal
+import requests
+from langgraph.graph import END, START, StateGraph
 from pydantic import BaseModel
-from langgraph.graph import StateGraph, START, END
+
+from tools import get_weather
+
 
 class State(TypedDict):
     question: str
-    params: Optional[dict]
-    eta: Optional[float]
-    answer: Optional[str]
-    weather: Optional[str]
-    need_weather: Optional[bool]
+    params: dict | None
+    eta: float | None
+    answer: str | None
+    weather: str | None
+    need_weather: bool | None
 
 
 class Trip(BaseModel):
