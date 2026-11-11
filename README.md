@@ -70,4 +70,5 @@ python graph_agent.py
 
 ## Multi-Tool Agent
 
+![Demo](demo.gif)
 The LangGraph agent now has two tools: ETA prediction and a weather tool (currently a stub that returns a fixed answer). A `decide` node checks the question and runs the weather node only when the user asks about the weather.

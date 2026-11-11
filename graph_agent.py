@@ -23,7 +23,7 @@ class Trip(BaseModel):
 
 
 def extract_node(state: State) -> dict:
-    print("مرحله ۱: استخراج پارامترها")
+    print("Step 1: Extracting parameters")
     response = ollama.chat(
         model="llama3.2:3b",
         messages=[{"role": "user", "content": state["question"]}],
@@ -36,7 +36,7 @@ def extract_node(state: State) -> dict:
 
 
 def predict_node(state: State) -> dict:
-    print("مرحله ۲: صدا زدن API")
+    print("Step 2: Calling the API")
     p = state["params"]
     days = {"Monday": 0, "Tuesday": 1, "Wednesday": 2, "Thursday": 3,
             "Friday": 4, "Saturday": 5, "Sunday": 6}
@@ -55,23 +55,22 @@ def predict_node(state: State) -> dict:
 
 
 def answer_node(state: State) -> dict:
-    print("مرحله ۳: ساختن جواب نهایی")
+    print("Step 3: Building the final answer")
     p = state["params"]
     text = (
-        f"از زون {p['pickup_zone']} به زون {p['dropoff_zone']} "
-        f"ساعت {p['hour']} روز {p['day_of_week']} "
-        f"حدود {state['eta']} دقیقه طول می‌کشه. "
-        f"{('آب‌وهوا: ' + state['weather']) if state.get('weather') else ''}"
+        f"From zone {p['pickup_zone']} to zone {p['dropoff_zone']} "
+        f"at {p['hour']}:00 on {p['day_of_week']}. "
+        f"{(' Weather: ' + state['weather']) if state.get('weather') else ''}"
     )
     return {"answer": text}
 
 def decide_node(state: State) -> dict:
-    print("مرحله: تصمیم‌گیری")
+    print("Step: Deciding")
     q = state["question"].lower()
     return {"need_weather": "weather" in q or "هوا" in q}
 
 def weather_node(state: State) -> dict:
-    print("مرحله: گرفتن آب‌وهوا")
+    print("Step: Getting weather")
     return {"weather": get_weather("Tehran")}
 
 
