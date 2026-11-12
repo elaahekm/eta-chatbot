@@ -12,3 +12,4 @@ jobs:
           python-version: "3.11"
       - run: pip install pytest ruff
       - run: python -m pytest
+      - run: ruff check .
