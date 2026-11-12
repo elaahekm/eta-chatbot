@@ -73,3 +73,11 @@ python graph_agent.py
 
 ![Demo](demo.gif)
 The LangGraph agent now has two tools: ETA prediction and a weather tool (currently a stub that returns a fixed answer). A `decide` node checks the question and runs the weather node only when the user asks about the weather.
+
+
+## Decisions
+
+- **pytest**: the standard, simple way to test Python code. It runs in one command, locally and in CI.
+
+- **ruff**: a very fast linter. It catches style problems and unsorted imports before they reach the repo.
+- **GitHub Actions**: runs pytest and ruff on every push, so a broken commit is caught right away.
