@@ -1,4 +1,5 @@
 # ETA Chatbot
+[![Tests](https://github.com/elaahekm/eta-chatbot/actions/workflows/tests.yml/badge.svg)](https://github.com/elaahekm/eta-chatbot/actions)
 
 A local LLM chatbot that answers NYC taxi trip-time questions by calling my ETA API as a tool.
 
