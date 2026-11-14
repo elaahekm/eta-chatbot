@@ -81,3 +81,13 @@ The LangGraph agent now has two tools: ETA prediction and a weather tool (curren
 
 - **ruff**: a very fast linter. It catches style problems and unsorted imports before they reach the repo.
 - **GitHub Actions**: runs pytest and ruff on every push, so a broken commit is caught right away.
+
+
+## Docker
+
+Run the tests in a container:
+
+    docker build -t eta-chatbot .
+    docker run --rm eta-chatbot
+
+Docker is used for running tests only, because the agent needs Ollama and the ETA API server.
